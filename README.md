@@ -12,7 +12,7 @@
   - 创建服务：ng g service shar/login    //在app/shar/下创建login服务（没有shar会自己创建文件夹）
   - 
 
-## 提供器(providers)：
+## 提供器(providers)：负责实例化所依赖的实例对象
   ### 用法：
     - 1.直接声明：providers: [XService]
     - 2.详细声明：providers: [provide: XService,useClass: AnotherXService]  //声明一个提供者，匹配provider指定的token，而由useClass的值来实现(前提是AnotherXService必须implements XService)
@@ -23,7 +23,11 @@
     - 3.当声明在模块中的提供器和声明在组件中的提供器具有相同的token(name)时，以小覆盖大，就近原则
     - 4.一般情况下，推荐将服务声明在模块中，只有特殊情况才会声明在组件中
 
-
+## 注入器：将实例化好的对象注入所需要的组件
+  ### 注入器层级关系：
+    - 应用级注入器(app.module.ts) > 主组件注入器(app.components.ts) > 子组件注入器(product1.components.ts)
+    - 顺序：当实例化Product1Component时，会走构造函数，发现需要引入一个ProductService，它会先在自己的providers里面寻找，如果没有找到，
+    再向上，到父组件(这里就是app.components.ts)里面去找，如果还没找到，再到应用级注入器(app.module.ts)里面去找
 
 
 # AngularIoc
